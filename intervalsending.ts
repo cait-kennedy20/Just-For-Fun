@@ -11,7 +11,7 @@ interface Contact {
 // Helper function to check if a date is within the last N days
 function isWithinLastNDays(date: Date, NumberOfDays: number): boolean {
   const NumberOfDaysAgo = new Date();
-  nDaysAgo.setDate(nDaysAgo.getDate() - n); // Calculate the date N days ago
+  nDaysAgo.setDate(nDaysAgo.getDate() - NumberOfDays); // Calculate the date N days ago
   return date >= nDaysAgo; // Return true if the date is within the last N days
 }
 
