@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -802,97 +803,8 @@
   <footer class="footer container">
     Explore FieldEdge APIs, partner onboarding, and online booking from a polished customer-facing experience.
   </footer>
-  <script>
-(function () {
-  var ROOT_ID = "fe-booking-root-c51df3a0e584";
-  var STYLE_ID = "fe-booking-style-c51df3a0e584";
-  var OVERLAY_ID = "fe-booking-overlay-c51df3a0e584";
-  var BOOKING_URL = "https://fieldedge.ipstudio.co/book/019b37e4-cb6f-784c-ad4a-c51df3a0e584";
-  var INSTANCE_KEY = "__fieldedgeBookingEmbed_c51df3a0e584";
-
-  if (window[INSTANCE_KEY]) return;
-  window[INSTANCE_KEY] = true;
-
-  var root = document.getElementById(ROOT_ID);
-  if (!root) return;
-
-  if (!document.getElementById(STYLE_ID)) {
-    var style = document.createElement("style");
-    style.id = STYLE_ID;
-    style.textContent = ""
-      + ".fieldedge-appt-book-button { display:inline-flex; align-items:center; justify-content:center; padding:14px 18px; border-radius:14px; font-weight:700; background:linear-gradient(135deg, #5b8cff, #3d6df0); color:#fff; text-decoration:none; box-shadow:0 16px 40px rgba(61,109,240,.3); }"
-      + ".fieldedge-appt-book-button:hover { opacity:.96; }"
-      + ".fe-booking-overlay { position:fixed; inset:0; background:rgba(17,24,39,0.65); display:none; align-items:center; justify-content:center; z-index:999999; }"
-      + ".fe-booking-modal { position:relative; width:min(960px, 92vw); height:88vh; background:#ffffff; border-radius:16px; overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,0.25); }"
-      + ".fe-booking-close { position:absolute; top:6px; right:10px; border:0; background:transparent; color:#6b7280; font:400 28px/1 Arial,sans-serif; cursor:pointer; z-index:2; padding:0; }"
-      + ".fe-booking-close:hover { color:#111827; }"
-      + ".fe-booking-frame { width:100%; height:100%; border:0; display:block; }"
-      + "@media (max-width: 768px) { .fe-booking-modal { width:100vw; height:100vh; border-radius:0; } .fe-booking-close { top:6px; right:10px; } }";
-    document.head.appendChild(style);
-  }
-
-  var linkText = root.getAttribute("data-booking-text") || "Book Now";
-  var triggerLink = document.createElement("a");
-  triggerLink.href = BOOKING_URL;
-  triggerLink.textContent = linkText;
-  triggerLink.className = "fieldedge-appt-book-button";
-  triggerLink.setAttribute("aria-haspopup", "dialog");
-  triggerLink.setAttribute("aria-controls", OVERLAY_ID);
-
-  var overlay = document.getElementById(OVERLAY_ID);
-  if (!overlay) {
-    overlay = document.createElement("div");
-    overlay.id = OVERLAY_ID;
-    overlay.className = "fe-booking-overlay";
-    overlay.innerHTML = ""
-      + "<div class=\"fe-booking-modal\" role=\"dialog\" aria-modal=\"true\" aria-label=\"Book service\">"
-      + "<button type=\"button\" class=\"fe-booking-close\" aria-label=\"Close booking\">&times;</button>"
-      + "<iframe class=\"fe-booking-frame\" src=\"" + BOOKING_URL + "\" title=\"Book service\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>"
-      + "</div>";
-    document.body.appendChild(overlay);
-  }
-
-  var previousOverflow = "";
-
-  function onEscape(event) {
-    if (event.key === "Escape") {
-      closeModal();
-    }
-  }
-
-  function openModal() {
-    previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    overlay.style.display = "flex";
-    document.addEventListener("keydown", onEscape);
-  }
-
-  function closeModal() {
-    overlay.style.display = "none";
-    document.body.style.overflow = previousOverflow;
-    document.removeEventListener("keydown", onEscape);
-  }
-
-  overlay.addEventListener("click", function (event) {
-    if (event.target === overlay) {
-      closeModal();
-    }
-  });
-
-  var closeButton = overlay.querySelector(".fe-booking-close");
-  if (closeButton) {
-    closeButton.addEventListener("click", closeModal);
-  }
-
-  triggerLink.addEventListener("click", function (event) {
-    event.preventDefault();
-    openModal();
-  });
-
-  root.appendChild(triggerLink);
-})();
-</script>
 </body>
 </html>
+
 
 
