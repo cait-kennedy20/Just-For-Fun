@@ -249,10 +249,11 @@
         <a href="#dashboard">Customer Dashboard</a>
         <a href="#pipeline">Partner Pipeline</a>
         <a href="#journeys">Journeys</a>
+        <a href="#booking">Online Booking</a>
       </div>
       <div class="nav-actions">
         <a class="btn btn-ghost small" href="#dashboard">View demo</a>
-        <a class="btn btn-primary small" href="#paths">Get API access</a>
+        <a class="btn btn-primary small" href="#booking">View booking demo</a>
       </div>
     </div>
   </nav>
@@ -518,8 +519,123 @@
     </div>
   </section>
 
+    <section id="booking" class="section container">
+    <div class="section-head">
+      <div>
+        <h2>Online booking request experience</h2>
+        <p>A demo of the booking request flow you've been building, designed to be embedded on a customer website or hosted as a standalone page.</p>
+      </div>
+      <a class="btn btn-ghost small" href="#paths">Back to portal</a>
+    </div>
+
+    <div class="content-grid">
+      <div class="panel">
+        <h3>Embedded booking request widget</h3>
+        <div class="subtle">Clear, consumer-friendly scheduling that sets the right expectation: this is a request, not an instant confirmed appointment.</div>
+
+        <div style="margin-top:18px;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));">
+          <div style="padding:24px 24px 18px;border-bottom:1px solid var(--line);background:linear-gradient(135deg, rgba(91,140,255,.18), rgba(45,212,191,.12));">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+              <div>
+                <div class="pill blue" style="margin-bottom:10px;">Online booking</div>
+                <h3 style="margin:0;font-size:30px;">Request service in minutes</h3>
+                <p style="margin:10px 0 0;color:#dbe4ff;max-width:620px;line-height:1.7;">Choose your service, share a few details, and send a request to the office. Your appointment is only confirmed once a team member reviews your request and reaches out.</p>
+              </div>
+              <div style="min-width:220px;padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:18px;background:rgba(10,15,31,.28);">
+                <div style="font-size:13px;color:#c7d2fe;">Experience type</div>
+                <div style="margin-top:8px;font-weight:700;">Booking request modal</div>
+                <div style="margin-top:6px;font-size:13px;color:#c7d2fe;">Embeddable or hosted</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:22px;display:grid;grid-template-columns:1.05fr .95fr;gap:18px;">
+            <div style="display:grid;gap:14px;">
+              <div style="padding:16px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.03);">
+                <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">Step 1</div>
+                <div style="font-weight:700;margin-bottom:10px;">Select service type</div>
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+                  <div class="quick-card" style="margin:0;"><strong>Cooling repair</strong><span>AC not working, warm air, frozen unit</span></div>
+                  <div class="quick-card" style="margin:0;"><strong>Heating repair</strong><span>No heat, uneven temps, system issue</span></div>
+                  <div class="quick-card" style="margin:0;"><strong>Maintenance</strong><span>Seasonal tune-up or system check</span></div>
+                  <div class="quick-card" style="margin:0;"><strong>Estimate</strong><span>New install, replacement, upgrade</span></div>
+                </div>
+              </div>
+
+              <div style="padding:16px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.03);">
+                <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">Step 2</div>
+                <div style="font-weight:700;margin-bottom:10px;">Pick a preferred time window</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+                  <div class="chip" style="padding:14px;border-radius:16px;text-align:center;color:#eef2ff;">Tomorrow AM</div>
+                  <div class="chip" style="padding:14px;border-radius:16px;text-align:center;color:#eef2ff;">Tomorrow PM</div>
+                  <div class="chip" style="padding:14px;border-radius:16px;text-align:center;color:#eef2ff;">First available</div>
+                </div>
+              </div>
+
+              <div style="padding:16px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.03);">
+                <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">Step 3</div>
+                <div style="font-weight:700;margin-bottom:10px;">Enter contact details</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                  <div class="chip" style="padding:14px;border-radius:16px;color:#eef2ff;">Full name</div>
+                  <div class="chip" style="padding:14px;border-radius:16px;color:#eef2ff;">Phone number</div>
+                  <div class="chip" style="padding:14px;border-radius:16px;color:#eef2ff;grid-column:1 / -1;">Service address</div>
+                  <div class="chip" style="padding:14px;border-radius:16px;color:#eef2ff;grid-column:1 / -1;">Tell us what’s going on</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:grid;gap:14px;align-content:start;">
+              <div style="padding:18px;border:1px solid rgba(45,212,191,.25);border-radius:18px;background:rgba(45,212,191,.08);">
+                <div style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--green-2);">Important expectation</div>
+                <div style="margin-top:8px;font-size:18px;font-weight:700;">This is a booking request, not an instant booking.</div>
+                <p style="margin:10px 0 0;color:#d8fff7;line-height:1.7;">After submission, the request appears in the office workflow for review. A team member confirms the appointment directly with the customer, rather than placing it automatically on the dispatch board.</p>
+              </div>
+
+              <div class="quick-card" style="padding:18px;">
+                <strong>Ops handoff</strong>
+                <span>Requests flow into the leads panel where the office can review, qualify, and dispatch accordingly.</span>
+              </div>
+
+              <div class="quick-card" style="padding:18px;">
+                <strong>Flexible deployment</strong>
+                <span>The experience can be embedded directly on a contractor’s site or hosted on a dedicated booking page.</span>
+              </div>
+
+              <div class="quick-card" style="padding:18px;">
+                <strong>What makes this valuable</strong>
+                <span>It gives customers a modern self-serve entry point while keeping scheduling control with the office team.</span>
+              </div>
+
+              <button class="btn btn-primary" style="width:100%;margin-top:6px;">Submit booking request</button>
+              <div style="font-size:12px;color:var(--muted);text-align:center;">By submitting, the customer is requesting service. Appointment confirmation happens after office follow-up.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="panel">
+          <h3>Why this belongs in the portfolio</h3>
+          <div class="subtle">This complements the API work by showing the embedded product experiences those APIs eventually power.</div>
+          <div class="timeline">
+            <div class="step"><div class="step-num">1</div><div><h4>Clear customer UX</h4><p>The flow feels modern and easy to use, but avoids the false promise of instant booking confirmation.</p></div></div>
+            <div class="step"><div class="step-num">2</div><div><h4>Operationally realistic</h4><p>The office team still owns final review and dispatch, which matches the realities of home services scheduling.</p></div></div>
+            <div class="step"><div class="step-num">3</div><div><h4>Embeddable product thinking</h4><p>The same experience can live inside a website modal or on a hosted page, which makes it easier to roll out and test.</p></div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Suggested portfolio framing</h3>
+          <div class="subtle">A simple way to position this work alongside the portal demo.</div>
+          <div class="code">I designed an online booking request experience for home services businesses that gives consumers a modern self-serve way to request service online while preserving operational control for the office team. The request does not auto-book onto the dispatch board; instead, it flows into office workflows for confirmation and dispatch. The experience is flexible enough to be embedded directly on a business website or hosted as a dedicated booking page.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer class="footer container">
     Portal demo concept for stakeholder reviews, roadmap discussions, and internal alignment on customer vs partner onboarding.
   </footer>
 </body>
 </html>
+
