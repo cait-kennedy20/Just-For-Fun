@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -232,6 +231,44 @@
       .hero { padding-top: 42px; }
       .choice-card h3 { font-size: 24px; }
     }
+  
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(3, 7, 18, .72);
+      backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center;
+      padding: 20px; z-index: 200;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      width: min(760px, 100%); max-height: 88vh; overflow: auto;
+      border-radius: 28px; border: 1px solid var(--line);
+      background: linear-gradient(180deg, #111831, #0f172c);
+      box-shadow: 0 30px 90px rgba(0,0,0,.45);
+      padding: 24px;
+    }
+    .modal-top {
+      display: flex; align-items: start; justify-content: space-between; gap: 18px; margin-bottom: 18px;
+    }
+    .modal-title { margin: 6px 0 0; font-size: 30px; letter-spacing: -.04em; }
+    .close-btn {
+      width: 42px; height: 42px; border-radius: 14px; border: 1px solid var(--line);
+      background: rgba(255,255,255,.04); color: var(--text); cursor: pointer; font-size: 20px;
+    }
+    .modal-grid { display: grid; gap: 14px; }
+    .flow-card {
+      border: 1px solid var(--line); border-radius: 20px; background: rgba(255,255,255,.03); padding: 18px;
+    }
+    .flow-card h4 { margin: 0; font-size: 18px; }
+    .flow-card p { margin: 8px 0 0; color: var(--muted); line-height: 1.7; font-size: 14px; }
+    .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .mini-fields { display: grid; gap: 10px; margin-top: 12px; }
+    .mini-field {
+      padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,.03);
+      color: #dbe4ff; font-size: 14px;
+    }
+    .success-note {
+      margin-top: 14px; padding: 14px 16px; border-radius: 16px; background: rgba(45,212,191,.1);
+      border: 1px solid rgba(45,212,191,.22); color: #d7fff7; line-height: 1.7; font-size: 14px;
+    }
   </style>
 </head>
 <body>
@@ -241,50 +278,50 @@
         <div class="brand-mark"></div>
         <div>
           <div>FieldEdge Developer</div>
-          <div style="font-size:12px;color:var(--muted);font-weight:500;">Portal concept demo</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:500;">Developer portal</div>
         </div>
       </div>
       <div class="nav-links">
         <a href="#paths">Paths</a>
         <a href="#dashboard">Customer Dashboard</a>
         <a href="#pipeline">Partner Pipeline</a>
-        <a href="#journeys">Journeys</a>
-        <a href="#booking">Online Booking</a>
+        <a href="#journeys">How it works</a>
+        <a href="#booking">Book Service</a>
       </div>
       <div class="nav-actions">
-        <a class="btn btn-ghost small" href="#dashboard">View demo</a>
-        <a class="btn btn-primary small" href="#booking">View booking demo</a>
+        <a class="btn btn-ghost small" href="#dashboard">Explore APIs</a>
+        <a class="btn btn-primary small" href="#booking">Book service</a>
       </div>
     </div>
   </nav>
 
   <header class="hero container">
-    <span class="eyebrow"><span class="dot"></span>Single front door, two onboarding experiences</span>
+    <span class="eyebrow"><span class="dot"></span>Build with FieldEdge or request service online</span>
     <div class="hero-grid">
       <div>
-        <h1>Build on FieldEdge APIs without forcing customers and partners through the same flow.</h1>
+        <h1>Build with FieldEdge APIs and give customers a modern way to request service online.</h1>
         <p class="lead">
-          This demo portal shows a cleaner model for onboarding: customers get fast self-serve production access using their existing accounts, while partners apply, receive a sandbox, and move through a structured launch pipeline before entering the ecosystem.
+          Explore a cleaner FieldEdge experience for two audiences: businesses and developers who want to connect to FieldEdge, and homeowners who want a fast, modern online booking flow that sends requests to the office for confirmation.
         </p>
       </div>
       <div class="hero-panel">
-        <div class="subtle">At a glance</div>
+        <div class="subtle">What you can do here</div>
         <div class="stat-grid">
           <div class="stat">
-            <div class="label">Customer path</div>
-            <div class="value">Instant</div>
+            <div class="label">Business access</div>
+            <div class="value">Self-serve</div>
           </div>
           <div class="stat">
-            <div class="label">Partner path</div>
-            <div class="value">Qualified</div>
+            <div class="label">Integration path</div>
+            <div class="value">Guided</div>
           </div>
           <div class="stat">
-            <div class="label">Customer env</div>
-            <div class="value">Production</div>
+            <div class="label">Booking flow</div>
+            <div class="value">Embeddable</div>
           </div>
           <div class="stat">
-            <div class="label">Partner env</div>
-            <div class="value">Sandbox → Prod</div>
+            <div class="label">Launch model</div>
+            <div class="value">Sandbox → Live</div>
           </div>
         </div>
       </div>
@@ -294,17 +331,17 @@
   <section id="paths" class="section container">
     <div class="section-head">
       <div>
-        <h2>Choose the right path from the start</h2>
-        <p>One entry point in the portal, then an intentional split based on who is requesting access.</p>
+        <h2>Choose how you want to work with FieldEdge</h2>
+        <p>Whether you need direct API access for your business or want to build a full integration, start with the path that matches your goals.</p>
       </div>
     </div>
 
     <div class="choice-grid">
       <div class="choice-card">
-        <span class="pill green">Customer path</span>
-        <h3>Use the API for your business</h3>
+        <span class="pill green">For businesses</span>
+        <h3>Connect your business to FieldEdge</h3>
         <p>
-          Existing FieldEdge customers can sign in, generate a key, and start sending data into production without dealing with partner applications or sandbox complexity.
+          Existing FieldEdge customers can sign in, generate credentials, and start sending data into production without extra contract steps or sandbox setup.
         </p>
         <ul class="bullet-list">
           <li>No contract required</li>
@@ -313,16 +350,16 @@
           <li>Quickstart examples tailored to common workflows</li>
         </ul>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <a class="btn btn-accent" href="#dashboard">Preview customer dashboard</a>
+          <button class="btn btn-accent" data-open-modal="customer">Get API access</button>
           <a class="btn btn-ghost" href="#journeys">See customer journey</a>
         </div>
       </div>
 
       <div class="choice-card">
-        <span class="pill blue">Partner path</span>
-        <h3>Build a marketplace integration</h3>
+        <span class="pill blue">For integration partners</span>
+        <h3>Build an integration for FieldEdge</h3>
         <p>
-          New partners submit an application, get reviewed, receive sandbox access, and move through a launch pipeline before production credentials and Gobo marketplace onboarding.
+          Integration partners can apply for sandbox access, build against test data, and move through a guided launch path before going live.
         </p>
         <ul class="bullet-list">
           <li>Application and qualification step</li>
@@ -331,7 +368,7 @@
           <li>Marketplace handoff after production approval</li>
         </ul>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <a class="btn btn-primary" href="#pipeline">Preview partner pipeline</a>
+          <button class="btn btn-primary" data-open-modal="partner">Apply as a partner</button>
           <a class="btn btn-ghost" href="#journeys">See partner journey</a>
         </div>
       </div>
@@ -342,8 +379,8 @@
     <div class="content-grid">
       <div class="stack">
         <div id="dashboard" class="panel">
-          <h3>Customer API dashboard</h3>
-          <div class="subtle">What a simple self-serve customer experience could look like after access is granted.</div>
+          <h3>Your API access dashboard</h3>
+          <div class="subtle">Manage credentials, find quickstarts, and get moving fast with the APIs your business needs.</div>
           <div class="toolbar">
             <div class="chips">
               <span class="chip">Account: Acme Heating & Cooling</span>
@@ -408,8 +445,8 @@
 
       <div class="stack">
         <div class="panel">
-          <h3>Customer request screen</h3>
-          <div class="subtle">The portal asks just enough to guide docs and guardrails, not enough to slow the customer down.</div>
+          <h3>Getting started is simple</h3>
+          <div class="subtle">A lightweight access flow helps businesses get credentials without unnecessary friction.</div>
           <div class="timeline">
             <div class="step">
               <div class="step-num">1</div>
@@ -441,8 +478,8 @@
   <section id="pipeline" class="section container">
     <div class="section-head">
       <div>
-        <h2>Partner application and launch pipeline</h2>
-        <p>What internal teams need to see as new integrations move from intake to production readiness.</p>
+        <h2>Partner onboarding</h2>
+        <p>A guided path for partners building repeatable integrations for the FieldEdge ecosystem.</p>
       </div>
       <a class="btn btn-ghost small" href="#journeys">Open onboarding details</a>
     </div>
@@ -496,8 +533,8 @@
   <section id="journeys" class="section container">
     <div class="content-grid">
       <div class="panel">
-        <h3>Customer journey</h3>
-        <div class="subtle">Optimized for one-off API needs inside an existing customer account.</div>
+        <h3>Business access journey</h3>
+        <div class="subtle">Built for existing FieldEdge businesses that want fast API access for operational workflows.</div>
         <div class="timeline">
           <div class="step"><div class="step-num">1</div><div><h4>Account authentication</h4><p>Customer signs in with their existing FieldEdge account.</p></div></div>
           <div class="step"><div class="step-num">2</div><div><h4>Intent capture</h4><p>Portal captures the use case so docs and examples can be tailored to the right API.</p></div></div>
@@ -508,7 +545,7 @@
 
       <div class="panel">
         <h3>Partner journey</h3>
-        <div class="subtle">Optimized for a full integration that eventually joins the partner ecosystem.</div>
+        <div class="subtle">Designed for partners creating integrations that can scale across multiple customers.</div>
         <div class="timeline">
           <div class="step"><div class="step-num">1</div><div><h4>Application</h4><p>Partner submits company details, use case, timeline, and expected customer value.</p></div></div>
           <div class="step"><div class="step-num">2</div><div><h4>Qualification</h4><p>Product and partnerships review fit, support impact, and roadmap alignment.</p></div></div>
@@ -522,16 +559,16 @@
     <section id="booking" class="section container">
     <div class="section-head">
       <div>
-        <h2>Online booking request experience</h2>
-        <p>A demo of the booking request flow you've been building, designed to be embedded on a customer website or hosted as a standalone page.</p>
+        <h2>Online booking</h2>
+        <p>A customer-facing booking experience that can be embedded directly on a website or hosted on its own page.</p>
       </div>
       <a class="btn btn-ghost small" href="#paths">Back to portal</a>
     </div>
 
     <div class="content-grid">
       <div class="panel">
-        <h3>Embedded booking request widget</h3>
-        <div class="subtle">Clear, consumer-friendly scheduling that sets the right expectation: this is a request, not an instant confirmed appointment.</div>
+        <h3>Book service online</h3>
+        <div class="subtle">Give customers a fast, modern way to request service while keeping final scheduling control with the office.</div>
 
         <div style="margin-top:18px;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));">
           <div style="padding:24px 24px 18px;border-bottom:1px solid var(--line);background:linear-gradient(135deg, rgba(91,140,255,.18), rgba(45,212,191,.12));">
@@ -615,8 +652,8 @@
 
       <div class="stack">
         <div class="panel">
-          <h3>Why this belongs in the portfolio</h3>
-          <div class="subtle">This complements the API work by showing the embedded product experiences those APIs eventually power.</div>
+          <h3>Why it works</h3>
+          <div class="subtle">This shows how FieldEdge can support a polished consumer entry point without losing operational control.</div>
           <div class="timeline">
             <div class="step"><div class="step-num">1</div><div><h4>Clear customer UX</h4><p>The flow feels modern and easy to use, but avoids the false promise of instant booking confirmation.</p></div></div>
             <div class="step"><div class="step-num">2</div><div><h4>Operationally realistic</h4><p>The office team still owns final review and dispatch, which matches the realities of home services scheduling.</p></div></div>
@@ -625,17 +662,147 @@
         </div>
 
         <div class="panel">
-          <h3>Suggested portfolio framing</h3>
-          <div class="subtle">A simple way to position this work alongside the portal demo.</div>
-          <div class="code">I designed an online booking request experience for home services businesses that gives consumers a modern self-serve way to request service online while preserving operational control for the office team. The request does not auto-book onto the dispatch board; instead, it flows into office workflows for confirmation and dispatch. The experience is flexible enough to be embedded directly on a business website or hosted as a dedicated booking page.</div>
+          <h3>Experience summary</h3>
+          <div class="subtle">A concise summary of the customer-facing value of the booking experience.</div>
+          <div class="code">FieldEdge online booking gives home services businesses a clean, modern way to let customers request service online. The experience opens in a simple modal, captures the information the office needs, and preserves operational control by routing the request for review and confirmation rather than auto-booking directly onto the dispatch board. It can be embedded on a website or hosted on a standalone page.</div>
         </div>
       </div>
     </div>
   </section>
 
+    <div class="modal-overlay" id="customerModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="customerModalTitle">
+      <div class="modal-top">
+        <div>
+          <div class="pill green">Customer access flow</div>
+          <h3 class="modal-title" id="customerModalTitle">Get API access with your existing FieldEdge account</h3>
+          <div class="subtle">A lightweight path for customers who want to solve a one-off workflow like sending leads into FieldEdge.</div>
+        </div>
+        <button class="close-btn" data-close-modal="customer" aria-label="Close">×</button>
+      </div>
+      <div class="modal-grid">
+        <div class="flow-card">
+          <h4>1. Sign in</h4>
+          <p>Authenticate with your existing customer account so the portal knows which FieldEdge business the API key should belong to.</p>
+        </div>
+        <div class="flow-card">
+          <h4>2. Choose your use case</h4>
+          <p>Select what you are trying to do so the portal can route you to the right docs, examples, and best practices.</p>
+          <div class="mini-fields">
+            <div class="mini-field">Use case: Send leads into FieldEdge</div>
+            <div class="mini-field">Builder: Internal admin or developer</div>
+          </div>
+        </div>
+        <div class="flow-card">
+          <h4>3. Generate production credentials</h4>
+          <p>Create an API key tied to your current account. Because you are already a customer, there is no contract workflow and no sandbox requirement.</p>
+        </div>
+        <div class="flow-card">
+          <h4>4. Start building</h4>
+          <p>Land in a quickstart experience with sample requests, schema guidance, and a Postman collection for common customer workflows.</p>
+        </div>
+      </div>
+      <div class="success-note">Best-fit use cases include one-off lead intake, customer creation, or lightweight operational workflows where the customer already has a live FieldEdge account.</div>
+      <div class="modal-actions">
+        <button class="btn btn-accent">Generate API key</button>
+        <button class="btn btn-ghost" data-close-modal="customer">Back to portal</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="partnerModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="partnerModalTitle">
+      <div class="modal-top">
+        <div>
+          <div class="pill blue">Partner onboarding flow</div>
+          <h3 class="modal-title" id="partnerModalTitle">Apply to build a full FieldEdge integration</h3>
+          <div class="subtle">A structured path for ecosystem partners who need a sandbox, technical onboarding, and production approval.</div>
+        </div>
+        <button class="close-btn" data-close-modal="partner" aria-label="Close">×</button>
+      </div>
+      <div class="modal-grid">
+        <div class="flow-card">
+          <h4>1. Submit application</h4>
+          <p>Tell us about your company, the integration you want to build, who it serves, and why it belongs in the ecosystem.</p>
+          <div class="mini-fields">
+            <div class="mini-field">Company name: LeadBridge</div>
+            <div class="mini-field">Target use case: Leads + work order lifecycle sync</div>
+            <div class="mini-field">Estimated launch timing: Q3</div>
+          </div>
+        </div>
+        <div class="flow-card">
+          <h4>2. Internal review</h4>
+          <p>Product and partnerships review fit, customer value, support impact, and whether the requested API coverage aligns with roadmap and ecosystem goals.</p>
+        </div>
+        <div class="flow-card">
+          <h4>3. Receive sandbox access</h4>
+          <p>Approved partners receive a sandbox account, API credentials, sample data, and a build checklist that covers the core workflows they need to complete.</p>
+        </div>
+        <div class="flow-card">
+          <h4>4. Launch to production</h4>
+          <p>After validation, the partner requests production access. Once approved, production credentials are issued and the integration can move into Gobo marketplace onboarding.</p>
+        </div>
+      </div>
+      <div class="success-note">Best-fit use cases include repeatable integrations that multiple customers can adopt, especially when the partner needs a non-customer sandbox environment to build and test safely.</div>
+      <div class="modal-actions">
+        <button class="btn btn-primary">Submit partner application</button>
+        <button class="btn btn-ghost" data-close-modal="partner">Back to portal</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const customerModal = document.getElementById('customerModal');
+    const partnerModal = document.getElementById('partnerModal');
+
+    function openModal(type) {
+      const modal = type === 'partner' ? partnerModal : customerModal;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(type) {
+      const modal = type === 'partner' ? partnerModal : customerModal;
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      if (!customerModal.classList.contains('open') && !partnerModal.classList.contains('open')) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.querySelectorAll('[data-open-modal]').forEach(btn => {
+      btn.addEventListener('click', () => openModal(btn.getAttribute('data-open-modal')));
+    });
+
+    document.querySelectorAll('[data-close-modal]').forEach(btn => {
+      btn.addEventListener('click', () => closeModal(btn.getAttribute('data-close-modal')));
+    });
+
+    [customerModal, partnerModal].forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('open');
+          modal.setAttribute('aria-hidden', 'true');
+          if (!customerModal.classList.contains('open') && !partnerModal.classList.contains('open')) {
+            document.body.style.overflow = '';
+          }
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal('customer');
+        closeModal('partner');
+      }
+    });
+  </script>
+
   <footer class="footer container">
-    Portal demo concept for stakeholder reviews, roadmap discussions, and internal alignment on customer vs partner onboarding.
+    Explore FieldEdge APIs, partner onboarding, and online booking from a polished customer-facing experience.
   </footer>
 </body>
 </html>
+
 
