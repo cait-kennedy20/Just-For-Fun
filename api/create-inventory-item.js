@@ -1,82 +1,65 @@
-async function getGoboAccessToken() {
-  const params = new URLSearchParams();
+<section id="inventory-api" class="page-section">
+  <div class="section-card">
+    <div class="eyebrow">Open API Demo</div>
+    <h2>Inventory API</h2>
+    <p class="section-copy">
+      Create a new inventory item using our Open API. This demo shows how a partner
+      or customer-facing workflow could submit inventory directly into the platform.
+    </p>
 
-  params.append("grant_type", "client_credentials");
-  params.append("client_id", process.env.GOBO_CLIENT_ID);
-  params.append("client_secret", process.env.GOBO_CLIENT_SECRET);
+    <form id="inventory-form" class="api-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="item-name">Name</label>
+          <input id="item-name" name="name" type="text" placeholder="Item-Kits" required />
+        </div>
 
-  const tokenResponse = await fetch("https://fieldedge-staging.withgobo.com/oauth/token", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: params.toString()
-  });
+        <div class="form-group">
+          <label for="item-cost">Cost</label>
+          <input id="item-cost" name="cost" type="number" step="0.01" placeholder="10" required />
+        </div>
 
-  const rawText = await tokenResponse.text();
+        <div class="form-group">
+          <label for="item-rate">Rate</label>
+          <input id="item-rate" name="rate" type="number" step="0.01" placeholder="25" required />
+        </div>
 
-  let tokenData;
-  try {
-    tokenData = JSON.parse(rawText);
-  } catch {
-    throw new Error(`Token endpoint returned non-JSON response: ${rawText}`);
-  }
+        <div class="form-group">
+          <label for="item-category">Category</label>
+          <input id="item-category" name="category" type="text" placeholder="Air Cooler:Air cleaner" />
+        </div>
 
-  if (!tokenResponse.ok) {
-    throw new Error(
-      tokenData.error_description ||
-      tokenData.error ||
-      `Failed to get access token (${tokenResponse.status})`
-    );
-  }
+        <div class="form-group form-group-full">
+          <label for="item-description">Description</label>
+          <textarea id="item-description" name="description" rows="4" placeholder="Test inventory item"></textarea>
+        </div>
 
-  if (!tokenData.access_token) {
-    throw new Error("Token response did not include access_token");
-  }
+        <div class="form-group form-group-full">
+          <label for="item-category-id">Category ID (optional)</label>
+          <input id="item-category-id" name="categoryId" type="text" placeholder="9ef0cfca-85dc-4c49-8d15-364e96a917c1" />
+        </div>
 
-  return tokenData.access_token;
-}
+        <div class="form-group form-group-full">
+          <label for="item-external-id">External ID (optional)</label>
+          <input id="item-external-id" name="externalId" type="text" placeholder="external-123" />
+        </div>
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
+        <div class="form-group form-group-full">
+          <label for="item-image">Image URL (optional)</label>
+          <input id="item-image" name="image" type="text" placeholder="https://example.com/image.png" />
+        </div>
+      </div>
 
-  try {
-    const accessToken = await getGoboAccessToken();
+      <div class="form-actions">
+        <button type="submit" id="inventory-submit-btn">Create Inventory Item</button>
+      </div>
+    </form>
 
-    const payload = req.body;
+    <div id="inventory-status" class="api-status" aria-live="polite"></div>
 
-    const apiResponse = await fetch("https://dev.api.fieldedge.com/open-api/v1/items", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${accessToken}`,
-
-        // 👇 ADD YOUR COMPANY CONTEXT HERE
-        "x-company-id": process.env.FIELDEDGE_COMPANY_ID
-
-        // If your Postman uses a different header, swap this:
-        // "x-account-id": process.env.FIELDEDGE_COMPANY_ID
-        // "x-tenant-id": process.env.FIELDEDGE_COMPANY_ID
-      },
-      body: JSON.stringify(payload)
-    });
-
-    const rawText = await apiResponse.text();
-
-    let data;
-    try {
-      data = JSON.parse(rawText);
-    } catch {
-      data = { raw: rawText };
-    }
-
-    return res.status(apiResponse.status).json(data);
-  } catch (error) {
-    return res.status(500).json({
-      error: "Request failed",
-      details: error.message
-    });
-  }
-}
+    <div class="response-block">
+      <div class="response-header">API Response</div>
+      <pre id="inventory-response">No request submitted yet.</pre>
+    </div>
+  </div>
+</section>
