@@ -1,36 +1,31 @@
 async function getGoboAccessToken() {
   const clientId = process.env.GOBO_CLIENT_ID;
   const clientSecret = process.env.GOBO_CLIENT_SECRET;
-  const target = process.env.GOBO_TARGET;
-  const targetId = process.env.GOBO_TARGET_ID || process.env.FIELDEDGE_COMPANY_ID;
+  const targetId = process.env.GOBO_TARGET_ID;
 
   if (!clientId || !clientSecret) {
     throw new Error("Missing GOBO_CLIENT_ID or GOBO_CLIENT_SECRET in Vercel environment variables");
   }
 
-  if (!target && !targetId) {
-    throw new Error("Missing GOBO_TARGET or GOBO_TARGET_ID in Vercel environment variables");
+  if (!targetId) {
+    throw new Error("Missing GOBO_TARGET_ID in Vercel environment variables");
   }
 
-  const params = new URLSearchParams();
-  params.append("grant_type", "client_credentials");
-  params.append("client_id", clientId);
-  params.append("client_secret", clientSecret);
+  const tokenUrl = "https://fieldedge-staging.withgobo.com/oauth/token";
 
-  if (target) {
-    params.append("target", target);
-  }
+  const basicAuth = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
 
-  if (targetId) {
-    params.append("target_id", targetId);
-  }
+  const body = new URLSearchParams();
+  body.append("grant_type", "client_credentials");
+  body.append("target_id", targetId);
 
-  const tokenResponse = await fetch("https://fieldedge-staging.withgobo.com/oauth/token", {
+  const tokenResponse = await fetch(tokenUrl, {
     method: "POST",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Authorization": `Basic ${basicAuth}`
     },
-    body: params.toString()
+    body: body.toString()
   });
 
   const rawText = await tokenResponse.text();
