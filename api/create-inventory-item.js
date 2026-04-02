@@ -1,8 +1,6 @@
 async function getGoboAccessToken() {
   const params = new URLSearchParams();
 
-  // This assumes Gobo is using a standard OAuth client credentials flow.
-  // If your Postman setup uses a different grant type, these fields will need to change.
   params.append("grant_type", "client_credentials");
   params.append("client_id", process.env.GOBO_CLIENT_ID);
   params.append("client_secret", process.env.GOBO_CLIENT_SECRET);
@@ -53,7 +51,14 @@ export default async function handler(req, res) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${accessToken}`
+        "Authorization": `Bearer ${accessToken}`,
+
+        // 👇 ADD YOUR COMPANY CONTEXT HERE
+        "x-company-id": process.env.FIELDEDGE_COMPANY_ID
+
+        // If your Postman uses a different header, swap this:
+        // "x-account-id": process.env.FIELDEDGE_COMPANY_ID
+        // "x-tenant-id": process.env.FIELDEDGE_COMPANY_ID
       },
       body: JSON.stringify(payload)
     });
