@@ -1,15 +1,29 @@
 async function getGoboAccessToken() {
   const clientId = process.env.GOBO_CLIENT_ID;
   const clientSecret = process.env.GOBO_CLIENT_SECRET;
+  const target = process.env.GOBO_TARGET;
+  const targetId = process.env.GOBO_TARGET_ID || process.env.FIELDEDGE_COMPANY_ID;
 
   if (!clientId || !clientSecret) {
     throw new Error("Missing GOBO_CLIENT_ID or GOBO_CLIENT_SECRET in Vercel environment variables");
+  }
+
+  if (!target && !targetId) {
+    throw new Error("Missing GOBO_TARGET or GOBO_TARGET_ID in Vercel environment variables");
   }
 
   const params = new URLSearchParams();
   params.append("grant_type", "client_credentials");
   params.append("client_id", clientId);
   params.append("client_secret", clientSecret);
+
+  if (target) {
+    params.append("target", target);
+  }
+
+  if (targetId) {
+    params.append("target_id", targetId);
+  }
 
   const tokenResponse = await fetch("https://fieldedge-staging.withgobo.com/oauth/token", {
     method: "POST",
@@ -32,6 +46,7 @@ async function getGoboAccessToken() {
     throw new Error(
       tokenData.error_description ||
       tokenData.error ||
+      tokenData.message ||
       `Failed to get access token (${tokenResponse.status})`
     );
   }
@@ -65,8 +80,6 @@ export default async function handler(req, res) {
 
     const accessToken = await getGoboAccessToken();
 
-    const payload = req.body;
-
     const apiResponse = await fetch("https://dev.api.fieldedge.com/open-api/v1/items", {
       method: "POST",
       headers: {
@@ -74,7 +87,7 @@ export default async function handler(req, res) {
         "Authorization": `Bearer ${accessToken}`,
         "x-company-id": companyId
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(req.body)
     });
 
     const rawText = await apiResponse.text();
