@@ -1,65 +1,98 @@
-<section id="inventory-api" class="page-section">
-  <div class="section-card">
-    <div class="eyebrow">Open API Demo</div>
-    <h2>Inventory API</h2>
-    <p class="section-copy">
-      Create a new inventory item using our Open API. This demo shows how a partner
-      or customer-facing workflow could submit inventory directly into the platform.
-    </p>
+async function getGoboAccessToken() {
+  const clientId = process.env.GOBO_CLIENT_ID;
+  const clientSecret = process.env.GOBO_CLIENT_SECRET;
 
-    <form id="inventory-form" class="api-form">
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="item-name">Name</label>
-          <input id="item-name" name="name" type="text" placeholder="Item-Kits" required />
-        </div>
+  if (!clientId || !clientSecret) {
+    throw new Error("Missing GOBO_CLIENT_ID or GOBO_CLIENT_SECRET in Vercel environment variables");
+  }
 
-        <div class="form-group">
-          <label for="item-cost">Cost</label>
-          <input id="item-cost" name="cost" type="number" step="0.01" placeholder="10" required />
-        </div>
+  const params = new URLSearchParams();
+  params.append("grant_type", "client_credentials");
+  params.append("client_id", clientId);
+  params.append("client_secret", clientSecret);
 
-        <div class="form-group">
-          <label for="item-rate">Rate</label>
-          <input id="item-rate" name="rate" type="number" step="0.01" placeholder="25" required />
-        </div>
+  const tokenResponse = await fetch("https://fieldedge-staging.withgobo.com/oauth/token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: params.toString()
+  });
 
-        <div class="form-group">
-          <label for="item-category">Category</label>
-          <input id="item-category" name="category" type="text" placeholder="Air Cooler:Air cleaner" />
-        </div>
+  const rawText = await tokenResponse.text();
 
-        <div class="form-group form-group-full">
-          <label for="item-description">Description</label>
-          <textarea id="item-description" name="description" rows="4" placeholder="Test inventory item"></textarea>
-        </div>
+  let tokenData;
+  try {
+    tokenData = JSON.parse(rawText);
+  } catch {
+    throw new Error(`Token endpoint returned non-JSON response: ${rawText}`);
+  }
 
-        <div class="form-group form-group-full">
-          <label for="item-category-id">Category ID (optional)</label>
-          <input id="item-category-id" name="categoryId" type="text" placeholder="9ef0cfca-85dc-4c49-8d15-364e96a917c1" />
-        </div>
+  if (!tokenResponse.ok) {
+    throw new Error(
+      tokenData.error_description ||
+      tokenData.error ||
+      `Failed to get access token (${tokenResponse.status})`
+    );
+  }
 
-        <div class="form-group form-group-full">
-          <label for="item-external-id">External ID (optional)</label>
-          <input id="item-external-id" name="externalId" type="text" placeholder="external-123" />
-        </div>
+  if (!tokenData.access_token) {
+    throw new Error("Token response did not include access_token");
+  }
 
-        <div class="form-group form-group-full">
-          <label for="item-image">Image URL (optional)</label>
-          <input id="item-image" name="image" type="text" placeholder="https://example.com/image.png" />
-        </div>
-      </div>
+  return tokenData.access_token;
+}
 
-      <div class="form-actions">
-        <button type="submit" id="inventory-submit-btn">Create Inventory Item</button>
-      </div>
-    </form>
+export default async function handler(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-    <div id="inventory-status" class="api-status" aria-live="polite"></div>
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
 
-    <div class="response-block">
-      <div class="response-header">API Response</div>
-      <pre id="inventory-response">No request submitted yet.</pre>
-    </div>
-  </div>
-</section>
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  try {
+    const companyId = process.env.FIELDEDGE_COMPANY_ID;
+
+    if (!companyId) {
+      throw new Error("Missing FIELDEDGE_COMPANY_ID in Vercel environment variables");
+    }
+
+    const accessToken = await getGoboAccessToken();
+
+    const payload = req.body;
+
+    const apiResponse = await fetch("https://dev.api.fieldedge.com/open-api/v1/items", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${accessToken}`,
+        "x-company-id": companyId
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const rawText = await apiResponse.text();
+
+    let data;
+    try {
+      data = JSON.parse(rawText);
+    } catch {
+      data = { raw: rawText };
+    }
+
+    return res.status(apiResponse.status).json(data);
+  } catch (error) {
+    console.error("create-inventory-item failed:", error);
+
+    return res.status(500).json({
+      error: "Request failed",
+      details: error.message || "Unknown server error"
+    });
+  }
+}
