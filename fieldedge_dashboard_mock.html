@@ -1,393 +1,16 @@
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FieldEdge Dashboard Mock</title>
-  <style>
-    :root {
-      --bg: #f5f7fb;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-      --radius: 18px;
-      --success: #0f766e;
-      --warning: #b45309;
-      --danger: #b91c1c;
-      --blue: #1d4ed8;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, #f8fafc 0%, #f3f6fb 100%);
-      color: var(--text);
-    }
-
-    .page {
-      max-width: 1380px;
-      margin: 0 auto;
-      padding: 28px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-
-    .brand h1 {
-      margin: 0;
-      font-size: 30px;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-    }
-
-    .brand p {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .controls {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .chip, .button {
-      border: 1px solid var(--border);
-      background: #fff;
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 14px;
-      color: var(--text);
-      box-shadow: var(--shadow);
-    }
-
-    .button.primary {
-      background: #111827;
-      color: white;
-      border-color: #111827;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.4fr 0.9fr;
-      gap: 18px;
-      margin-bottom: 18px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid rgba(229, 231, 235, 0.8);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
-    }
-
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .section-title h2,
-    .section-title h3 {
-      margin: 0;
-      font-size: 18px;
-      letter-spacing: -0.02em;
-    }
-
-    .section-title span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .kpi {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      background: linear-gradient(180deg, #fff 0%, #fbfdff 100%);
-    }
-
-    .kpi-label {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .kpi-value {
-      font-size: 30px;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
-    }
-
-    .delta {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #f8fafc;
-    }
-
-    .delta.up { color: var(--success); }
-    .delta.down { color: var(--danger); }
-    .delta.warn { color: var(--warning); }
-
-    .action-list {
-      display: grid;
-      gap: 12px;
-    }
-
-    .action-item {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px;
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: center;
-      background: #fff;
-    }
-
-    .action-copy strong {
-      display: block;
-      margin-bottom: 4px;
-      font-size: 15px;
-    }
-
-    .action-copy p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.4;
-    }
-
-    .pill {
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .pill.red { background: #fef2f2; color: #b91c1c; }
-    .pill.amber { background: #fffbeb; color: #b45309; }
-    .pill.blue { background: #eff6ff; color: #1d4ed8; }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 18px;
-      margin-bottom: 18px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 18px;
-      margin-bottom: 18px;
-    }
-
-    .funnel {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
-      align-items: end;
-      margin-top: 8px;
-    }
-
-    .funnel-step {
-      text-align: center;
-    }
-
-    .bar {
-      width: 100%;
-      border-radius: 14px 14px 8px 8px;
-      background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
-      margin-bottom: 10px;
-      min-height: 48px;
-      display: flex;
-      align-items: end;
-      justify-content: center;
-      color: white;
-      font-size: 13px;
-      font-weight: 600;
-      padding-bottom: 8px;
-    }
-
-    .funnel-step h4 {
-      margin: 0;
-      font-size: 14px;
-    }
-
-    .funnel-step p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 14px;
-    }
-
-    .mini-stat {
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      background: #fcfdff;
-    }
-
-    .mini-stat .label {
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 8px;
-    }
-
-    .mini-stat .value {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-    }
-
-    .chart {
-      height: 210px;
-      margin-top: 10px;
-      display: flex;
-      align-items: end;
-      gap: 12px;
-      padding-top: 16px;
-    }
-
-    .chart-col {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .chart-bar {
-      width: 100%;
-      max-width: 42px;
-      background: linear-gradient(180deg, #c7d2fe 0%, #4f46e5 100%);
-      border-radius: 12px 12px 6px 6px;
-    }
-
-    .chart-label {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 8px;
-    }
-
-    .table th,
-    .table td {
-      text-align: left;
-      padding: 12px 8px;
-      border-bottom: 1px solid var(--border);
-      font-size: 14px;
-    }
-
-    .table th {
-      color: var(--muted);
-      font-weight: 600;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .progress-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .progress {
-      height: 8px;
-      width: 110px;
-      border-radius: 999px;
-      background: #eef2f7;
-      overflow: hidden;
-    }
-
-    .progress > span {
-      display: block;
-      height: 100%;
-      background: linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%);
-      border-radius: 999px;
-    }
-
-    .footer-note {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 12px;
-    }
-
-    @media (max-width: 1100px) {
-      .hero,
-      .grid-2,
-      .grid-3,
-      .split {
-        grid-template-columns: 1fr;
-      }
-      .kpi-grid,
-      .funnel {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 720px) {
-      .page { padding: 16px; }
-      .kpi-grid,
-      .funnel {
-        grid-template-columns: 1fr;
-      }
-      .topbar {
-        align-items: flex-start;
-      }
-      .chart {
-        gap: 8px;
-      }
-    }
-  </style>
-</head>
-<body>
+<div id="dashboard-page">
   <div class="page">
+    <button class="dashboard-back" onclick="showMainSite()">← Back to site</button>
+
     <div class="topbar">
-      <div class="brand">
-        <h1>Growth & Booking Performance</h1>
-        <p>See revenue, conversions, messaging performance, and missed opportunities in one place.</p>
+      <div class="dash-brand">
+        <h1>Business Performance Dashboard</h1>
+        <p>Monitor lead flow, booking activity, work order performance, invoicing, payments, and messaging delivery in one place.</p>
       </div>
       <div class="controls">
-        <div class="chip">Last 30 days</div>
-        <div class="chip">All locations</div>
-        <div class="chip">Bookings + Messaging</div>
+        <div class="button">Last 30 days</div>
+        <div class="button">All locations</div>
+        <div class="button">Operations + Messaging</div>
         <button class="button primary">Export report</button>
       </div>
     </div>
@@ -395,29 +18,29 @@
     <section class="hero">
       <div class="card">
         <div class="section-title">
-          <h2>Business outcomes</h2>
+          <h2>Core business metrics</h2>
           <span>Compared with previous 30 days</span>
         </div>
         <div class="kpi-grid">
           <div class="kpi">
-            <div class="kpi-label">Recovered revenue</div>
-            <div class="kpi-value">$24.6k</div>
-            <div class="delta up">↑ 18% from waitlist + SMS follow-up</div>
+            <div class="kpi-label">New leads</div>
+            <div class="kpi-value">742</div>
+            <div class="delta up">↑ 14% lead volume</div>
           </div>
           <div class="kpi">
-            <div class="kpi-label">Bookings created</div>
-            <div class="kpi-value">318</div>
-            <div class="delta up">↑ 12% conversion volume</div>
+            <div class="kpi-label">Online booking requests</div>
+            <div class="kpi-value">186</div>
+            <div class="delta up">↑ 11% digital demand</div>
           </div>
           <div class="kpi">
-            <div class="kpi-label">Lead-to-booking rate</div>
-            <div class="kpi-value">43%</div>
-            <div class="delta up">↑ 6 pts efficiency gain</div>
+            <div class="kpi-label">Total invoiced</div>
+            <div class="kpi-value">$128.4k</div>
+            <div class="delta up">↑ 9% from prior period</div>
           </div>
           <div class="kpi">
-            <div class="kpi-label">Missed opportunity</div>
-            <div class="kpi-value">$9.1k</div>
-            <div class="delta warn">Needs follow-up on stale requests</div>
+            <div class="kpi-label">Total paid</div>
+            <div class="kpi-value">$96.7k</div>
+            <div class="delta up">75% collection rate</div>
           </div>
         </div>
       </div>
@@ -430,24 +53,24 @@
         <div class="action-list">
           <div class="action-item">
             <div class="action-copy">
-              <strong>14 waitlist requests are still open</strong>
-              <p>These customers have not been offered a newly opened slot yet.</p>
+              <strong>23 new leads still need follow-up</strong>
+              <p>These leads have not yet been converted into booked work.</p>
             </div>
-            <span class="pill red">Urgent</span>
+            <span class="status-pill red">Urgent</span>
           </div>
           <div class="action-item">
             <div class="action-copy">
-              <strong>9 unread customer replies</strong>
-              <p>Fast replies correlate with better booking conversion.</p>
+              <strong>11 booking requests are awaiting confirmation</strong>
+              <p>Review and convert online booking requests into scheduled work orders.</p>
             </div>
-            <span class="pill amber">Today</span>
+            <span class="status-pill amber">Today</span>
           </div>
           <div class="action-item">
             <div class="action-copy">
-              <strong>Thursday demand is above capacity</strong>
-              <p>You may want to expand availability or trigger overflow messaging.</p>
+              <strong>Delivery failures increased this week</strong>
+              <p>Review failed SMS and email messages to reduce customer communication gaps.</p>
             </div>
-            <span class="pill blue">Insight</span>
+            <span class="status-pill blue">Insight</span>
           </div>
         </div>
       </div>
@@ -456,128 +79,129 @@
     <section class="grid-2">
       <div class="card">
         <div class="section-title">
-          <h3>Conversion funnel</h3>
-          <span>From interest to completed booking</span>
+          <h3>Lead to work order funnel</h3>
+          <span>From inquiry to completed job</span>
         </div>
         <div class="funnel">
           <div class="funnel-step">
             <div class="bar" style="height: 180px;">742</div>
-            <h4>Leads</h4>
-            <p>All requests</p>
+            <h4>New leads</h4>
+            <p>All incoming opportunities</p>
           </div>
           <div class="funnel-step">
-            <div class="bar" style="height: 150px;">501</div>
-            <h4>Reached</h4>
-            <p>67% contacted</p>
+            <div class="bar" style="height: 145px;">186</div>
+            <h4>Online bookings</h4>
+            <p>Requests submitted online</p>
           </div>
           <div class="funnel-step">
-            <div class="bar" style="height: 126px;">388</div>
-            <h4>Engaged</h4>
-            <p>2-way replies</p>
+            <div class="bar" style="height: 132px;">318</div>
+            <h4>Scheduled</h4>
+            <p>Paid work orders scheduled</p>
           </div>
           <div class="funnel-step">
-            <div class="bar" style="height: 108px;">318</div>
-            <h4>Booked</h4>
-            <p>43% of leads</p>
-          </div>
-          <div class="funnel-step">
-            <div class="bar" style="height: 90px;">276</div>
+            <div class="bar" style="height: 112px;">276</div>
             <h4>Completed</h4>
-            <p>87% completion</p>
+            <p>Work orders completed</p>
+          </div>
+          <div class="funnel-step">
+            <div class="bar" style="height: 96px;">214</div>
+            <h4>Paid</h4>
+            <p>Jobs fully collected</p>
           </div>
         </div>
+
         <div class="split">
           <div class="mini-stat">
-            <div class="label">Average response time</div>
-            <div class="value">6 min</div>
+            <div class="label">Paid work orders scheduled</div>
+            <div class="value">318</div>
           </div>
           <div class="mini-stat">
-            <div class="label">Average time to booking</div>
-            <div class="value">1.4 hrs</div>
+            <div class="label">Work orders completed</div>
+            <div class="value">276</div>
           </div>
         </div>
       </div>
 
       <div class="card">
         <div class="section-title">
-          <h3>Waitlist performance</h3>
-          <span>The feature story</span>
+          <h3>Revenue snapshot</h3>
+          <span>Financial performance</span>
         </div>
         <div class="kpi-grid" style="grid-template-columns: repeat(2, 1fr);">
           <div class="kpi">
-            <div class="kpi-label">Requests joined</div>
-            <div class="kpi-value">186</div>
-            <div class="delta up">↑ 24% interest</div>
+            <div class="kpi-label">Average invoice value</div>
+            <div class="kpi-value">$602</div>
+            <div class="delta up">↑ 4% average ticket</div>
           </div>
           <div class="kpi">
-            <div class="kpi-label">Open slots matched</div>
-            <div class="kpi-value">62</div>
-            <div class="delta up">33% fill rate</div>
+            <div class="kpi-label">Collection rate</div>
+            <div class="kpi-value">75%</div>
+            <div class="delta up">Paid vs invoiced</div>
           </div>
           <div class="kpi">
-            <div class="kpi-label">Notifications sent</div>
-            <div class="kpi-value">121</div>
-            <div class="delta up">92% delivered</div>
+            <div class="kpi-label">Outstanding balance</div>
+            <div class="kpi-value">$31.7k</div>
+            <div class="delta warn">Still unpaid</div>
           </div>
           <div class="kpi">
-            <div class="kpi-label">Recovered bookings</div>
-            <div class="kpi-value">47</div>
-            <div class="delta up">$8.4k recovered</div>
+            <div class="kpi-label">Completed-to-paid rate</div>
+            <div class="kpi-value">78%</div>
+            <div class="delta up">Strong closeout</div>
           </div>
         </div>
-        <div class="footer-note">This module is ideal for a tee time waitlist, online booking overflow, or last-minute cancellation recovery.</div>
+        <div class="footer-note">This view helps operators connect demand, fulfilled work, and payment performance.</div>
       </div>
     </section>
 
     <section class="grid-3">
       <div class="card">
         <div class="section-title">
-          <h3>Bookings trend</h3>
+          <h3>Work order trend</h3>
           <span>Past 6 weeks</span>
         </div>
         <div class="chart">
-          <div class="chart-col"><div class="chart-bar" style="height: 92px;"></div><div class="chart-label">W1</div></div>
-          <div class="chart-col"><div class="chart-bar" style="height: 118px;"></div><div class="chart-label">W2</div></div>
-          <div class="chart-col"><div class="chart-bar" style="height: 109px;"></div><div class="chart-label">W3</div></div>
-          <div class="chart-col"><div class="chart-bar" style="height: 145px;"></div><div class="chart-label">W4</div></div>
-          <div class="chart-col"><div class="chart-bar" style="height: 162px;"></div><div class="chart-label">W5</div></div>
-          <div class="chart-col"><div class="chart-bar" style="height: 174px;"></div><div class="chart-label">W6</div></div>
+          <div class="chart-col"><div class="chart-bar" style="height: 88px;"></div><div class="chart-label">W1</div></div>
+          <div class="chart-col"><div class="chart-bar" style="height: 112px;"></div><div class="chart-label">W2</div></div>
+          <div class="chart-col"><div class="chart-bar" style="height: 124px;"></div><div class="chart-label">W3</div></div>
+          <div class="chart-col"><div class="chart-bar" style="height: 136px;"></div><div class="chart-label">W4</div></div>
+          <div class="chart-col"><div class="chart-bar" style="height: 150px;"></div><div class="chart-label">W5</div></div>
+          <div class="chart-col"><div class="chart-bar" style="height: 166px;"></div><div class="chart-label">W6</div></div>
         </div>
       </div>
 
       <div class="card">
         <div class="section-title">
-          <h3>Messaging performance</h3>
-          <span>Your product moat</span>
+          <h3>Messaging totals</h3>
+          <span>Outbound communication volume</span>
         </div>
         <table class="table">
           <thead>
             <tr>
-              <th>Type</th>
+              <th>Channel</th>
               <th>Sent</th>
-              <th>Reply rate</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Waitlist opening</td>
-              <td>121</td>
-              <td>48%</td>
+              <td>SMS sent</td>
+              <td>1,482</td>
+              <td>High volume</td>
             </tr>
             <tr>
-              <td>Booking reminder</td>
-              <td>602</td>
-              <td>19%</td>
+              <td>Email sent</td>
+              <td>2,316</td>
+              <td>High volume</td>
             </tr>
             <tr>
-              <td>Technician update</td>
-              <td>341</td>
-              <td>27%</td>
+              <td>Delivered</td>
+              <td>3,521</td>
+              <td>92.7%</td>
             </tr>
             <tr>
-              <td>Missed lead follow-up</td>
-              <td>88</td>
-              <td>31%</td>
+              <td>Failed</td>
+              <td>277</td>
+              <td>7.3%</td>
             </tr>
           </tbody>
         </table>
@@ -585,57 +209,41 @@
 
       <div class="card">
         <div class="section-title">
-          <h3>Capacity by day</h3>
-          <span>Useful for operators</span>
+          <h3>Operational health</h3>
+          <span>Work order execution</span>
         </div>
         <table class="table">
           <thead>
             <tr>
-              <th>Day</th>
-              <th>Utilization</th>
+              <th>Metric</th>
+              <th>Value</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Mon</td>
-              <td>
-                <div class="progress-wrap"><div class="progress"><span style="width: 72%"></span></div>72%</div>
-              </td>
+              <td>Scheduled work orders</td>
+              <td>318</td>
               <td>Healthy</td>
             </tr>
             <tr>
-              <td>Tue</td>
-              <td>
-                <div class="progress-wrap"><div class="progress"><span style="width: 84%"></span></div>84%</div>
-              </td>
+              <td>Completed work orders</td>
+              <td>276</td>
               <td>Healthy</td>
             </tr>
             <tr>
-              <td>Wed</td>
-              <td>
-                <div class="progress-wrap"><div class="progress"><span style="width: 91%"></span></div>91%</div>
-              </td>
-              <td>Busy</td>
+              <td>Completion rate</td>
+              <td>86.8%</td>
+              <td>Strong</td>
             </tr>
             <tr>
-              <td>Thu</td>
-              <td>
-                <div class="progress-wrap"><div class="progress"><span style="width: 98%"></span></div>98%</div>
-              </td>
-              <td>At risk</td>
-            </tr>
-            <tr>
-              <td>Fri</td>
-              <td>
-                <div class="progress-wrap"><div class="progress"><span style="width: 66%"></span></div>66%</div>
-              </td>
-              <td>Open</td>
+              <td>Paid rate</td>
+              <td>77.5%</td>
+              <td>Monitor</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
   </div>
-</body>
-</html>
+</div>
