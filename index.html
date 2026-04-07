@@ -877,6 +877,15 @@
   </footer>
 
   <script>
+    function showDashboard() {
+    document.getElementById("main-site").style.display = "none";
+    document.getElementById("dashboard-page").style.display = "block";
+  }
+
+  function showMainSite() {
+    document.getElementById("main-site").style.display = "block";
+    document.getElementById("dashboard-page").style.display = "none";
+  }
     const customerModal = document.getElementById('customerModal');
     const partnerModal = document.getElementById('partnerModal');
     const bookingModal = document.getElementById('fe-booking-overlay-c51df3a0e584');
