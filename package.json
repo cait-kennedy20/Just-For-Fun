@@ -1,0 +1,10 @@
+{
+  "name": "booking-feedback-agent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "booking-feedback-agent": "node agents/booking-feedback-monitor.mjs",
+    "booking-feedback-agent:once": "node agents/booking-feedback-monitor.mjs --once"
+  }
+}
